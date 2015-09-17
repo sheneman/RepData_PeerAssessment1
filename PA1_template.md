@@ -1,31 +1,25 @@
----
-title: "Reproducible Research: Peer Assessment 1"
-output: 
-  html_document:
-    keep_md: true
----
+# Reproducible Research: Peer Assessment 1
 
 
 ## Loading and preprocessing the data
 Here we load the data from disk.   We also set some basic options to control how numbers are printed.
 
-```{r, echo=TRUE}
 
+```r
 # Set options to NOT print numbers as scientific notation and use only 3 decimal points
 options("scipen" = 1)
 options("digits" = 3)
 
 # Read the data from disk into a Data Frame
 stepdata <- read.csv("activity.csv")
-
 ```
 
 ## What is mean total number of steps taken per day?
 
 Here we compute the mean total number of steps taken per day and present the results in a histogram.  We also compute the overall mean and median number of steps taken.
 
-```{r, echo=TRUE}
 
+```r
 ##
 ##   Part 1 - Histogram of Total Number of Steps Taken Each Day + Mean and Median
 ##
@@ -53,17 +47,29 @@ for (day in levels(stepdata$date)) {
 hist(sum_step_vector, breaks=30, xlab="Number of Steps", ylab="Days", main="Total Number of Steps Taken Each Day")
 ```
 
+![](PA1_template_files/figure-html/unnamed-chunk-2-1.png) 
+
 The **mean** number of steps taken per day is computed as: 
 
-```{r, echo=TRUE}
+
+```r
 mean_steps <- mean(sum_step_vector, na.rm=TRUE)
 message(mean_steps)
 ```
 
+```
+## 10767.1886792453
+```
+
 The **median** number of steps taken per day is computed as:
-```{r, echo=TRUE}
+
+```r
 median_steps <- median(sum_step_vector, na.rm=TRUE)
 message(median_steps)
+```
+
+```
+## 10766
 ```
 
   
@@ -74,8 +80,8 @@ message(median_steps)
 
 Here we analyze the daily activity pattern by summarizing the number of steps taken in each 5-minute interval across all days in our data.   We construct a time series plot of the average number of steps taken in each of the 5-minute intervals across all days.
 
-``` {r}
 
+```r
 ######
 ######   Part 2 - Average Daily Activity Patterns
 ######
@@ -117,13 +123,16 @@ overall_average_interval <- mean(average_steps_per_interval, na.rm=TRUE)
 plot(levels(as.factor(stepdata$interval)), average_steps_per_interval, type="l", xlab="5-Minute Interval", ylab="Average # Steps per 5-Minute Interval", main="Average Daily Activity")
 ```
 
-The 5-minute interval, averaged across all days in the dataset, that contains the maximum number of steps is `r max_interval_index`.   The maximum number of steps, averaged across all days, in this interval is `r max_interval_val`. 
+![](PA1_template_files/figure-html/unnamed-chunk-5-1.png) 
+
+The 5-minute interval, averaged across all days in the dataset, that contains the maximum number of steps is 835.   The maximum number of steps, averaged across all days, in this interval is 206.17. 
 
 ## Imputing missing values
 
 Here, we count the number of missing values in the original dataset and replace those missing values with an imputed value.   We use the overall mean number of steps per day that was computed using the original dataset to fill in for any missing value.
 
-```{r}
+
+```r
 ##
 ## Part 3 - Imputing Missing Values
 ##
@@ -165,23 +174,27 @@ for (day in levels(imputed_data$date)) {
 
 # Plot the histogram of the total number of steps taken each day, based on the imputed/filled data
 hist(sum_step_vector, breaks=30, xlab="Number of Steps", ylab="Days", main="Total Number of Steps Taken Each Day", sub="(For Dataset with Imputed Missing Values)")
+```
 
+![](PA1_template_files/figure-html/unnamed-chunk-6-1.png) 
+
+```r
 # Calculate the overall mean and median number of steps taken per day based on the new dataset
 mean_steps_imputed <- mean(sum_step_vector)
 median_steps_imputed <- median(sum_step_vector)
-
 ```
   
-We counted `r missing_value_count` total missing values in the original dataset.  
+We counted 2304 total missing values in the original dataset.  
 
-Using the dataset with imputed missing values, the overall mean number of steps per day is: `r as.double(mean_steps_imputed)` while the median number of steps is `r median_steps_imputed`.   Interestingly, the difference between the mean of the **original** dataset with missing values (`r mean_steps`) and the mean of the **new** dataset with imputed missing values (`r mean_steps_imputed`) is negligible.   This is a side effect with to the way in which the imputed missing values were filled with the overall daily mean computed from the dataset with missing values, thereby keeping nearly the same means.   The median value differs more substantially between the **original** dataset (`r median_steps`) and the **new** dataset with imputed missing values (`r median_steps_imputed`) and is mainly due to accumulated rounding error.  
+Using the dataset with imputed missing values, the overall mean number of steps per day is: 10751.738 while the median number of steps is 10656.   Interestingly, the difference between the mean of the **original** dataset with missing values (10767.189) and the mean of the **new** dataset with imputed missing values (10751.738) is negligible.   This is a side effect with to the way in which the imputed missing values were filled with the overall daily mean computed from the dataset with missing values, thereby keeping nearly the same means.   The median value differs more substantially between the **original** dataset (10766) and the **new** dataset with imputed missing values (10656) and is mainly due to accumulated rounding error.  
 
 
 ## Are there differences in activity patterns between weekdays and weekends?
 
 Here we examine differences in activity levels between weekends and weekdays.  We create a panel plot which highlights the differences in average activity throughout the day between weekdays and weekends.
 
-```{r}
+
+```r
 ##
 ## Part 4 - Differences in activity patterns between weekdays and weekends
 ##
@@ -224,6 +237,11 @@ for(interval in levels(as.factor(stepdata$interval))) {
 old_par <- par(mfrow=c(2,1), mar=c(4,4,3,1))
 plot(levels(as.factor(stepdata$interval)), weekend_interval_means, xlab="", ylab="Weekend", type="l", main="Weekend and Weekday Activity Patterns")
 plot(levels(as.factor(stepdata$interval)), weekday_interval_means, xlab="Interval", ylab="Weekday", type="l")
+```
+
+![](PA1_template_files/figure-html/unnamed-chunk-7-1.png) 
+
+```r
 par(old_par)
 ```
 
