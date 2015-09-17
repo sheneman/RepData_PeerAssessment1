@@ -1,4 +1,9 @@
-# Reproducible Research: Peer Assessment 1
+---
+title: "Reproducible Research: Peer Assessment 1"
+output: 
+  html_document:
+    keep_md: true
+---
 
 
 ## Loading and preprocessing the data
@@ -47,7 +52,7 @@ for (day in levels(stepdata$date)) {
 hist(sum_step_vector, breaks=30, xlab="Number of Steps", ylab="Days", main="Total Number of Steps Taken Each Day")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-2-1.png) 
+![plot of chunk unnamed-chunk-2](figure/unnamed-chunk-2-1.png) 
 
 The **mean** number of steps taken per day is computed as: 
 
@@ -123,7 +128,7 @@ overall_average_interval <- mean(average_steps_per_interval, na.rm=TRUE)
 plot(levels(as.factor(stepdata$interval)), average_steps_per_interval, type="l", xlab="5-Minute Interval", ylab="Average # Steps per 5-Minute Interval", main="Average Daily Activity")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-5-1.png) 
+![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5-1.png) 
 
 The 5-minute interval, averaged across all days in the dataset, that contains the maximum number of steps is 835.   The maximum number of steps, averaged across all days, in this interval is 206.17. 
 
@@ -176,7 +181,7 @@ for (day in levels(imputed_data$date)) {
 hist(sum_step_vector, breaks=30, xlab="Number of Steps", ylab="Days", main="Total Number of Steps Taken Each Day", sub="(For Dataset with Imputed Missing Values)")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-6-1.png) 
+![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6-1.png) 
 
 ```r
 # Calculate the overall mean and median number of steps taken per day based on the new dataset
@@ -239,7 +244,7 @@ plot(levels(as.factor(stepdata$interval)), weekend_interval_means, xlab="", ylab
 plot(levels(as.factor(stepdata$interval)), weekday_interval_means, xlab="Interval", ylab="Weekday", type="l")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-7-1.png) 
+![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-7-1.png) 
 
 ```r
 par(old_par)
